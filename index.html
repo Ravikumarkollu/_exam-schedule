@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MediStudy Planner - Setup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3A7CA5;
+            --primary-light: #5C9EAD;
+            --secondary: #81C3D7;
+            --accent: #FF6B6B;
+            --light: #F0F7FF;
+            --dark: #16425B;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --anatomy: #EF5350;
+            --physiology: #42A5F5;
+            --biochemistry: #66BB6A;
+            --pharmacology: #FFA726;
+            --gray-light: #E1E5E9;
+            --gray: #90A4AE;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #3A7CA5 0%, #16425B 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 15px;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        .app-container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        
+        .content {
+            padding: 1.5rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .input-group {
+            margin-bottom: 1.2rem;
+            position: relative;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .input-group input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(58, 124, 165, 0.2);
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 1.1rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(58, 124, 165, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-primary:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(58, 124, 165, 0.3);
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+                font-size: 15px;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .card {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1><i class="fas fa-heartbeat"></i> MediStudy Planner</h1>
+            <p>Plan your medical exam preparation day by day</p>
+        </div>
+        
+        <div class="content">
+            <div id="setup">
+                <div class="card">
+                    <p style="text-align: center; margin-bottom: 1.2rem; color: var(--dark);">
+                        Enter your four medical subjects. You'll study <strong>one subject per day</strong> in sequence.
+                    </p>
+                    
+                    <div class="input-group">
+                        <label for="subject1"><i class="fas fa-lungs" style="color: var(--anatomy);"></i> Subject 1</label>
+                        <input type="text" id="subject1" placeholder="e.g., Anatomy" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="subject2"><i class="fas fa-brain" style="color: var(--physiology);"></i> Subject 2</label>
+                        <input type="text" id="subject2" placeholder="e.g., Physiology" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="subject3"><i class="fas fa-vial" style="color: var(--biochemistry);"></i> Subject 3</label>
+                        <input type="text" id="subject3" placeholder="e.g., Biochemistry" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="subject4"><i class="fas fa-pills" style="color: var(--pharmacology);"></i> Subject 4</label>
+                        <input type="text" id="subject4" placeholder="e.g., Pharmacology" required>
+                    </div>
+                    
+                    <button class="btn-primary" onclick="generatePlan()">
+                        <i class="fas fa-stethoscope"></i> Generate Study Plan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generatePlan() {
+            const subjects = [
+                document.getElementById('subject1').value,
+                document.getElementById('subject2').value,
+                document.getElementById('subject3').value,
+                document.getElementById('subject4').value
+            ];
+
+            if (subjects.some(subject => subject === '')) {
+                alert('Please name all your medical subjects!');
+                return;
+            }
+
+            // Save subjects to localStorage
+            localStorage.setItem('subjects', JSON.stringify(subjects));
+            
+            // Redirect to calendar view
+            window.location.href = 'calendar.html';
+        }
+
+        // Pre-fill inputs if returning user
+        window.onload = function() {
+            const savedSubjects = localStorage.getItem('subjects');
+            if (savedSubjects) {
+                try {
+                    const subjects = JSON.parse(savedSubjects);
+                    document.getElementById('subject1').value = subjects[0] || '';
+                    document.getElementById('subject2').value = subjects[1] || '';
+                    document.getElementById('subject3').value = subjects[2] || '';
+                    document.getElementById('subject4').value = subjects[3] || '';
+                } catch (e) {
+                    console.error("Error loading saved subjects:", e);
+                }
+            }
+        };
+    </script>
+</body>
+</html>

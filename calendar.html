@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MediStudy Planner - Calendar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3A7CA5;
+            --primary-light: #5C9EAD;
+            --secondary: #81C3D7;
+            --accent: #FF6B6B;
+            --light: #F0F7FF;
+            --dark: #16425B;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --anatomy: #EF5350;
+            --physiology: #42A5F5;
+            --biochemistry: #66BB6A;
+            --pharmacology: #FFA726;
+            --gray-light: #E1E5E9;
+            --gray: #90A4AE;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #3A7CA5 0%, #16425B 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 15px;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        .app-container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        
+        .content {
+            padding: 1.5rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .btn-secondary {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 1rem auto;
+        }
+        
+        .btn-secondary:active {
+            transform: translateY(2px);
+            background: var(--light);
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            background: linear-gradient(135deg, var(--secondary), #4DA8CA);
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .weekday {
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.9rem;
+            padding: 0.5rem;
+        }
+        
+        .day-cell {
+            aspect-ratio: 1/1;
+            background: white;
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            font-weight: 600;
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        
+        .day-cell:active {
+            transform: scale(0.96);
+        }
+        
+        .day-cell.today {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+        
+        .day-cell.completed {
+            background: linear-gradient(135deg, var(--success), #66BB6A);
+            color: white;
+        }
+        
+        .day-number {
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+        
+        .day-content {
+            text-align: center;
+            font-size: 0.8rem;
+            line-height: 1.2;
+            width: 100%;
+        }
+        
+        .subject-name {
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+            font-size: 0.75rem;
+        }
+        
+        .unit-badge {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 0.2rem 0.4rem;
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+        
+        .completed .unit-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .progress-section {
+            margin: 1.5rem 0;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .progress-bar {
+            height: 10px;
+            width: 100%;
+            background: var(--gray-light);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, var(--success), #66BB6A);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.8s ease;
+        }
+        
+        .phase-indicators {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .phase {
+            padding: 0.8rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            flex: 1;
+            min-width: 140px;
+        }
+        
+        .study-phase {
+            background: linear-gradient(135deg, #42A5F5, #29B6F6);
+            color: white;
+        }
+        
+        .revision-phase {
+            background: linear-gradient(135deg, #FF7043, #FF8A65);
+            color: white;
+        }
+        
+        .empty-cell {
+            aspect-ratio: 1/1;
+            visibility: hidden;
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+                font-size: 15px;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            .card {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .calendar {
+                gap: 5px;
+            }
+            
+            .day-number {
+                font-size: 1.1rem;
+            }
+            
+            .subject-name {
+                font-size: 0.7rem;
+            }
+            
+            .unit-badge {
+                font-size: 0.7rem;
+            }
+            
+            .phase {
+                min-width: 100%;
+                margin: 0 0 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1><i class="fas fa-heartbeat"></i> MediStudy Planner</h1>
+            <p>Your Study Calendar</p>
+        </div>
+        
+        <div class="content">
+            <div id="calendar-view">
+                <div class="calendar-header">
+                    <span>September</span>
+                    <span>October</span>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="progress-info">
+                        <span>Your Progress</span>
+                        <span id="progress-percent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+                
+                <div class="calendar-weekdays">
+                    <div class="calendar" style="grid-template-columns: repeat(7, 1fr); margin-bottom: 0.5rem;">
+                        <div class="weekday">Sun</div>
+                        <div class="weekday">Mon</div>
+                        <div class="weekday">Tue</div>
+                        <div class="weekday">Wed</div>
+                        <div class="weekday">Thu</div>
+                        <div class="weekday">Fri</div>
+                        <div class="weekday">Sat</div>
+                    </div>
+                </div>
+                
+                <div class="calendar" id="calendar"></div>
+                
+                <div class="phase-indicators">
+                    <div class="phase study-phase">
+                        Study Phase<br>Sep 15 - Oct 4
+                    </div>
+                    <div class="phase revision-phase">
+                        Revision Phase<br>Oct 5 - Oct 7
+                    </div>
+                </div>
+                
+                <button class="btn-secondary" onclick="showRescheduleModal()">
+                    <i class="fas fa-calendar-alt"></i> Reschedule Plan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const subjectColors = [ '#EF5350', '#42A5F5', '#66BB6A', '#FFA726' ];
+        let studyPlan = [];
+        let today = new Date();
+        today.setHours(0,0,0,0);
+        let subjects = [];
+
+        // Initialize the app
+        function initApp() {
+            // Try to load from localStorage
+            const savedPlan = localStorage.getItem('studyPlan');
+            const savedSubjects = localStorage.getItem('subjects');
+            
+            if (savedPlan && savedSubjects) {
+                try {
+                    studyPlan = JSON.parse(savedPlan);
+                    // Convert date strings back to Date objects
+                    studyPlan = studyPlan.map(day => {
+                        return {
+                            ...day,
+                            date: new Date(day.date)
+                        };
+                    });
+                    
+                    subjects = JSON.parse(savedSubjects);
+                    renderCalendar();
+                } catch (e) {
+                    console.error("Error loading saved data:", e);
+                    // Redirect to setup if data is invalid
+                    window.location.href = 'index.html';
+                }
+            } else {
+                // If no saved data, generate from subjects
+                const savedSubjects = localStorage.getItem('subjects');
+                if (savedSubjects) {
+                    try {
+                        subjects = JSON.parse(savedSubjects);
+                        generateStudyPlan(subjects);
+                        renderCalendar();
+                    } catch (e) {
+                        console.error("Error loading subjects:", e);
+                        window.location.href = 'index.html';
+                    }
+                } else {
+                    // No data at all, go to setup
+                    window.location.href = 'index.html';
+                }
+            }
+        }
+
+        function generateStudyPlan(subjects) {
+            studyPlan = [];
+            const startDate = new Date('2024-09-15');
+            const revisionStartDate = new Date('2024-10-05');
+            const endDate = new Date('2024-10-07');
+            
+            let currentDate = new Date(startDate);
+            let dayCounter = 0;
+
+            while (currentDate <= endDate) {
+                const isStudyPhase = currentDate < revisionStartDate;
+                const dayInfo = {
+                    date: new Date(currentDate),
+                    subject: '',
+                    unit: 0,
+                    completed: false
+                };
+
+                if (isStudyPhase) {
+                    // Calculate which subject and unit for this day
+                    const subjectIndex = dayCounter % 4; // Cycle through 0-3 for subjects
+                    const unitNumber = Math.floor(dayCounter / 4) + 1; // Calculate unit number
+                    
+                    if (unitNumber <= 5) { // Only add if we have units left
+                        dayInfo.subject = subjects[subjectIndex];
+                        dayInfo.unit = unitNumber;
+                        dayInfo.color = subjectColors[subjectIndex];
+                    }
+                }
+
+                studyPlan.push(dayInfo);
+                currentDate.setDate(currentDate.getDate() + 1);
+                dayCounter++;
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('studyPlan', JSON.stringify(studyPlan));
+        }
+
+        function renderCalendar() {
+            const calendarEl = document.getElementById('calendar');
+            calendarEl.innerHTML = '';
+
+            const startDate = new Date('2024-09-15');
+            // September 15, 2024 is a Sunday, but we want it to appear as Monday
+            // So we'll add just one empty cell at the beginning
+            const emptyCell = document.createElement('div');
+            emptyCell.className = 'empty-cell';
+            calendarEl.appendChild(emptyCell);
+
+            // Render each day
+            studyPlan.forEach((day, index) => {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'day-cell';
+                
+                if (day.date.getTime() === today.getTime()) {
+                    dayEl.classList.add('today');
+                }
+                
+                if (day.completed) {
+                    dayEl.classList.add('completed');
+                }
+
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = day.date.getDate();
+                dayEl.appendChild(dayNumber);
+
+                if (day.subject) {
+                    const dayContent = document.createElement('div');
+                    dayContent.className = 'day-content';
+                    
+                    const subjectName = document.createElement('div');
+                    subjectName.className = 'subject-name';
+                    subjectName.textContent = day.subject;
+                    subjectName.style.color = day.color;
+                    dayContent.appendChild(subjectName);
+                    
+                    const unitBadge = document.createElement('div');
+                    unitBadge.className = 'unit-badge';
+                    unitBadge.textContent = `Unit ${day.unit}`;
+                    unitBadge.style.color = day.color;
+                    dayContent.appendChild(unitBadge);
+                    
+                    dayEl.appendChild(dayContent);
+                }
+
+                dayEl.onclick = () => {
+                    // Save the day index and open day view
+                    localStorage.setItem('currentDayIndex', index);
+                    window.location.href = 'day-view.html';
+                };
+                calendarEl.appendChild(dayEl);
+            });
+
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const totalDays = studyPlan.filter(day => day.subject).length;
+            const completedDays = studyPlan.filter(day => day.completed).length;
+            const progressPercent = totalDays > 0 ? (completedDays / totalDays) * 100 : 0;
+            
+            document.getElementById('progress-fill').style.width = progressPercent + '%';
+            document.getElementById('progress-percent').textContent = Math.round(progressPercent) + '%';
+        }
+        
+        function showRescheduleModal() {
+            // Open the reschedule modal
+            window.location.href = 'reschedule-modal.html';
+        }
+
+        // Initialize the app when the page loads
+        window.onload = initApp;
+    </script>
+</body>
+</html>
