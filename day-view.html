@@ -522,7 +522,7 @@
                 // Add time table based on day of week
                 const timeTable = document.createElement('div');
                 
-                if (currentDay.date.getDay() === 0) { // Sunday
+                if (currentDay.date.getDay() === 6) { // Sunday
                     timeTable.innerHTML = `
                         <div class="time-slot ${isTimeActive(5, 0, 8, 0) ? 'active' : ''}">
                             <div class="time-range">
@@ -764,3 +764,4 @@
     </script>
 </body>
 </html>
+
