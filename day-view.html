@@ -27,70 +27,50 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             background: linear-gradient(135deg, #3A7CA5 0%, #16425B 100%);
             color: var(--dark);
             min-height: 100vh;
-            padding: 15px;
-            line-height: 1.6;
-            font-size: 16px;
+            padding: 0;
+            line-height: 1.5;
+            font-size: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
         }
         
         .app-container {
+            width: 100%;
             max-width: 100%;
-            margin: 0 auto;
+            height: 100vh;
             background: rgba(255, 255, 255, 0.98);
-            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
         }
         
         .header {
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
-            padding: 1.5rem;
+            padding: 1rem;
             text-align: center;
-            border-radius: 20px 20px 0 0;
             position: relative;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         
-        .header h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        
-        .header p {
-            opacity: 0.9;
-            font-size: 0.95rem;
-        }
-        
-        .content {
-            padding: 1.5rem;
-        }
-        
-        .day-view-header {
+        .header-content {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--gray-light);
+            justify-content: space-between;
         }
         
-        .day-view-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            display: none; /* Hide the date title */
-        }
-        
-        .close-btn {
-            background: var(--accent);
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             border: none;
             border-radius: 50%;
@@ -101,94 +81,171 @@
             justify-content: center;
             cursor: pointer;
             font-size: 1.2rem;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
         
-        .close-btn:active {
+        .back-btn:active {
             transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.3);
         }
         
-        .time-table {
-            margin-top: 1.5rem;
+        .header-text {
+            flex: 1;
+            padding: 0 10px;
+        }
+        
+        .header h1 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 0.85rem;
+        }
+        
+        .content {
+            padding: 1rem;
+            overflow-y: auto;
+            flex: 1;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .subject-card {
+            text-align: center;
+            margin: 0 0 1.5rem 0;
+            padding: 1.5rem 1rem;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .subject-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.75rem;
+            font-size: 1.5rem;
+        }
+        
+        .subject-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.25rem;
+            font-weight: 700;
+        }
+        
+        .subject-card p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        .current-time {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0 1.5rem 0;
+            padding: 0.8rem;
+            background: var(--light);
+            border-radius: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .current-time i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .schedule-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+            border-left: 3px solid var(--primary);
         }
         
         .time-slot {
             display: flex;
-            margin-bottom: 1rem;
-            background: var(--light);
+            margin-bottom: 0.75rem;
+            background: white;
             border-radius: 12px;
             padding: 1rem;
-            align-items: center;
             transition: all 0.3s ease;
             border-left: 4px solid var(--primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         
         .time-slot.active {
             background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
             border-left: 4px solid var(--accent);
             transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
         }
         
         .time-range {
             font-weight: 700;
-            min-width: 120px;
+            min-width: 95px;
             color: var(--primary);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            gap: 4px;
+            padding-right: 0.75rem;
+            margin-right: 0.75rem;
+            border-right: 1px solid var(--gray-light);
         }
         
         .time-range i {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+        }
+        
+        .time-range span {
+            font-size: 0.85rem;
         }
         
         .time-description {
             flex: 1;
-            padding-left: 10px;
-            border-left: 1px solid var(--gray-light);
-            margin-left: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
         .time-description h4 {
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             color: var(--dark);
+            font-size: 0.95rem;
         }
         
         .time-description p {
             color: var(--gray);
-            font-size: 0.9rem;
-        }
-        
-        .day-view-subject {
-            text-align: center;
-            margin: 1.5rem 0;
-            padding: 1.5rem;
-            border-radius: 16px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .day-view-subject h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .day-view-subject p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+            font-size: 0.8rem;
+            line-height: 1.4;
         }
         
         .completion-toggle {
             display: block;
             width: 100%;
             padding: 1rem;
-            margin-top: 1.5rem;
+            margin: 1.5rem 0;
             background: linear-gradient(135deg, var(--secondary), #4DA8CA);
             color: white;
             border: none;
             border-radius: 12px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -200,124 +257,131 @@
             box-shadow: 0 2px 8px rgba(129, 195, 215, 0.3);
         }
         
-        .time-indicator {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 1rem 0;
-            padding: 0.8rem;
-            background: var(--light);
-            border-radius: 12px;
-            font-weight: 600;
-            color: var(--primary);
+        .completion-toggle.completed {
+            background: linear-gradient(135deg, var(--success), #66BB6A);
         }
         
-        .time-indicator i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-        
-        .study-tips {
+        .tips-card {
             margin-top: 1.5rem;
             padding: 1rem;
             background: #FFF8E1;
             border-radius: 12px;
             border-left: 4px solid var(--warning);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         
-        .study-tips h4 {
+        .tips-card h4 {
             display: flex;
             align-items: center;
             margin-bottom: 0.5rem;
             color: var(--dark);
+            font-size: 0.95rem;
         }
         
-        .study-tips h4 i {
+        .tips-card h4 i {
             margin-right: 8px;
             color: var(--warning);
         }
         
-        .study-tips p {
-            font-size: 0.9rem;
+        .tips-card p {
+            font-size: 0.85rem;
             color: var(--gray);
+            line-height: 1.5;
         }
         
         .day-nav {
             display: flex;
             justify-content: space-between;
-            margin-top: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            gap: 10px;
         }
         
         .day-nav-btn {
-            padding: 0.8rem 1.2rem;
-            background: var(--light);
-            border: noe;
+            padding: 0.8rem 1rem;
+            background: white;
+            border: 1px solid var(--gray-light);
             border-radius: 10px;
             font-weight: 600;
             color: var(--primary);
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            gap: 6px;
             transition: all 0.3s ease;
+            flex: 1;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
         
         .day-nav-btn:active {
             transform: translateY(2px);
-            background: var(--gray-light);
+            background: var(--light);
         }
         
-        /* Mobile optimizations */
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-                font-size: 15px;
-            }
-            
-            .content {
-                padding: 1rem;
-            }
-            
-            .time-slot {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .time-range {
-                margin-bottom: 0.5rem;
-            }
-            
-            .time-description {
-                border-left: none;
-                border-top: 1px solid var(--gray-light);
-                margin-left: 0;
-                margin-top: 10px;
-                padding-left: 0;
-                padding-top: 10px;
-                width: 100%;
-            }
+        .day-nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--gray);
+        }
+        
+        .empty-state i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .empty-state p {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Swipe navigation area */
+        .swipe-area {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: linear-gradient(to top, rgba(255,255,255,0.7), transparent);
+            pointer-events: none;
+            z-index: 10;
         }
     </style>
 </head>
 <body>
     <div class="app-container">
         <div class="header">
-            <h1><i class="fas fa-heartbeat"></i> MediStudy Planner</h1>
-            <p>Daily Schedule</p>
+            <div class="header-content">
+                <button class="back-btn" onclick="goBackToCalendar()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="header-text">
+                    <h1>MediStudy Planner</h1>
+                    <p>Daily Schedule</p>
+                </div>
+                <div style="width: 40px;"></div> <!-- Spacer for balance -->
+            </div>
         </div>
         
         <div class="content">
-            <div class="day-view-header">
-                <h2 class="day-view-title" id="day-view-date"></h2>
-                <button class="close-btn" onclick="goBackToCalendar()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
             <div id="day-view-content">
                 <!-- Content will be dynamically inserted here -->
             </div>
         </div>
+        
+        <div class="swipe-area"></div>
     </div>
 
     <script>
@@ -325,6 +389,8 @@
         let subjects = [];
         let currentDayIndex = 0;
         let currentDay = null;
+        let touchStartX = 0;
+        let touchStartY = 0;
 
         function initDayView() {
             // Load data from localStorage
@@ -368,15 +434,48 @@
                 
                 renderDayView();
             }
+            
+            // Add touch events for swipe navigation
+            document.addEventListener('touchstart', handleTouchStart, false);
+            document.addEventListener('touchmove', handleTouchMove, false);
+        }
+
+        function handleTouchStart(evt) {
+            touchStartX = evt.touches[0].clientX;
+            touchStartY = evt.touches[0].clientY;
+        }
+
+        function handleTouchMove(evt) {
+            if (!touchStartX || !touchStartY) return;
+            
+            const touchEndX = evt.touches[0].clientX;
+            const touchEndY = evt.touches[0].clientY;
+            
+            const diffX = touchStartX - touchEndX;
+            const diffY = touchStartY - touchEndY;
+            
+            // Only consider horizontal swipes with minimal vertical movement
+            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                if (diffX > 0) {
+                    // Swipe left - next day
+                    if (currentDayIndex < studyPlan.length - 1) {
+                        navigateToDay(currentDayIndex + 1);
+                    }
+                } else {
+                    // Swipe right - previous day
+                    if (currentDayIndex > 0) {
+                        navigateToDay(currentDayIndex - 1);
+                    }
+                }
+                
+                // Reset touch positions
+                touchStartX = 0;
+                touchStartY = 0;
+            }
         }
 
         function renderDayView() {
-            const dayViewDate = document.getElementById('day-view-date');
             const dayViewContent = document.getElementById('day-view-content');
-            
-            // Format date (but don't display it)
-            const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
-            dayViewDate.textContent = currentDay.date.toLocaleDateString('en-US', options);
             
             // Clear previous content
             dayViewContent.innerHTML = '';
@@ -384,12 +483,18 @@
             if (currentDay.subject && currentDay.subject !== "No study planned") {
                 // Add subject info
                 const subjectEl = document.createElement('div');
-                subjectEl.className = 'day-view-subject';
-                subjectEl.innerHTML = `
-                    <h3>${currentDay.subject}</h3>
-                    <p>Unit ${currentDay.unit} • ${getStudyTips(currentDay.subject)}</p>
-                `;
+                subjectEl.className = 'subject-card';
                 subjectEl.style.background = `linear-gradient(135deg, ${currentDay.color}, ${adjustColor(currentDay.color, 20)})`;
+                
+                const iconClass = getSubjectIcon(currentDay.subject);
+                
+                subjectEl.innerHTML = `
+                    <div class="subject-icon">
+                        <i class="${iconClass}"></i>
+                    </div>
+                    <h3>${currentDay.subject}</h3>
+                    <p>Unit ${currentDay.unit}</p>
+                `;
                 dayViewContent.appendChild(subjectEl);
                 
                 // Add current time indicator
@@ -399,41 +504,61 @@
                 const currentTimeString = `${currentHours.toString().padStart(2, '0')}:${currentMinutes.toString().padStart(2, '0')}`;
                 
                 const timeIndicator = document.createElement('div');
-                timeIndicator.className = 'time-indicator';
+                timeIndicator.className = 'current-time';
                 timeIndicator.innerHTML = `
                     <i class="fas fa-clock"></i> Current time: ${currentTimeString}
                 `;
                 dayViewContent.appendChild(timeIndicator);
                 
+                // Add schedule section
+                const scheduleSection = document.createElement('div');
+                scheduleSection.className = 'schedule-section';
+                
+                const sectionTitle = document.createElement('div');
+                sectionTitle.className = 'section-title';
+                sectionTitle.textContent = 'Today\'s Schedule';
+                scheduleSection.appendChild(sectionTitle);
+                
                 // Add time table based on day of week
                 const timeTable = document.createElement('div');
-                timeTable.className = 'time-table';
                 
-                if (currentDay.date.getDay() === 6) { // Sunday
+                if (currentDay.date.getDay() === 0) { // Sunday
                     timeTable.innerHTML = `
                         <div class="time-slot ${isTimeActive(5, 0, 8, 0) ? 'active' : ''}">
-                            <div class="time-range"><i class="fas fa-sun"></i> 5:00 AM - 8:00 AM</div>
+                            <div class="time-range">
+                                <i class="fas fa-sun"></i>
+                                <span>5:00-8:00</span>
+                            </div>
                             <div class="time-description">
                                 <h4>Study Session 1</h4>
-                                <p>Focus on understanding complex medical concepts</p>
+                                <p>Focus on complex medical concepts</p>
                             </div>
                         </div>
                         <div class="time-slot ${isTimeActive(8, 0, 16, 0) ? 'active' : ''}">
-                            <div class="time-range"><i class="fas fa-utensils"></i> 8:00 AM - 4:00 PM</div>
+                            <div class="time-range">
+                                <i class="fas fa-utensils"></i>
+                                <span>8:00-4:00</span>
+                            </div>
                             <div class="time-description">
-                                <h4>Break / Clinical Practice</h4>
-                                <p>Meals, rest, and practical clinical activities</p>
+                                <h4>Break / Clinicals</h4>
+                                <p>Meals, rest, and practical activities</p>
                             </div>
                         </div>
                         <div class="time-slot ${isTimeActive(16, 0, 19, 0) ? 'active' : ''}">
-                            <div class="time-range"><i class="fas fa-moon"></i> 4:00 PM - 7:00 PM</div>
+                            <div class="time-range">
+                                <i class="fas fa-moon"></i>
+                                <span>4:00-7:00</span>
+                            </div>
                             <div class="time-description">
                                 <h4>Study Session 2</h4>
                                 <p>Practice clinical cases and review</p>
                             </div>
                         </div>
                         <div class="time-slot ${isTimeActive(19, 0, 24, 0) ? 'active' : ''}">
-                            <div class="time-range"><i class="fas fa-bed"></i> 7:00 PM onwards</div>
+                            <div class="time-range">
+                                <i class="fas fa-bed"></i>
+                                <span>7:00+</span>
+                            </div>
                             <div class="time-description">
                                 <h4>Rest & Relaxation</h4>
                                 <p>Wind down and prepare for sleep</p>
@@ -443,102 +568,134 @@
                 } else { // Weekday
                     timeTable.innerHTML = `
                         <div class="time-slot ${isTimeActive(5, 0, 6, 0) ? 'active' : ''}">
-                            <div class="time-range"><i class="fas fa-sun"></i> 5:00 AM - 6:00 AM</div>
+                            <div class="time-range">
+                                <i class="fas fa-sun"></i>
+                                <span>5:00-6:00</span>
+                            </div>
                             <div class="time-description">
-                                <h4>Morning Study Session</h4>
-                                <p>Review previous day's medical concepts</p>
+                                <h4>Morning Review</h4>
+                                <p>Review previous day's concepts</p>
                             </div>
                         </div>
                         <div class="time-slot ${isTimeActive(6, 0, 19, 0) ? 'active' : ''}">
-                            <div class="time-range"><i class="fas fa-hospital"></i> 6:00 AM - 7:00 PM</div>
+                            <div class="time-range">
+                                <i class="fas fa-hospital"></i>
+                                <span>6:00-7:00</span>
+                            </div>
                             <div class="time-description">
-                                <h4>Medical School / Clinicals</h4>
-                                <p>Regular medical school schedule and clinical rotations</p>
+                                <h4>Medical School</h4>
+                                <p>Classes and clinical rotations</p>
                             </div>
                         </div>
                         <div class="time-slot ${isTimeActive(19, 0, 20, 30) ? 'active' : ''}">
-                            <div class="time-range"><i class="fas fa-book-medical"></i> 7:00 PM - 8:30 PM</div>
+                            <div class="time-range">
+                                <i class="fas fa-book-medical"></i>
+                                <span>7:00-8:30</span>
+                            </div>
                             <div class="time-description">
-                                <h4>Evening Study Session</h4>
-                                <p>Focus on new medical concepts and case studies</p>
+                                <h4>Evening Study</h4>
+                                <p>New concepts and case studies</p>
                             </div>
                         </div>
                         <div class="time-slot ${isTimeActive(21, 0, 21, 30) ? 'active' : ''}">
-                            <div class="time-range"><i class="fas fa-sync-alt"></i> 9:00 PM - 9:30 PM</div>
+                            <div class="time-range">
+                                <i class="fas fa-sync-alt"></i>
+                                <span>9:00-9:30</span>
+                            </div>
                             <div class="time-description">
                                 <h4>Quick Revision</h4>
-                                <p>Review key medical points from the day</p>
+                                <p>Review key points from the day</p>
                             </div>
                         </div>
                         <div class="time-slot ${isTimeActive(21, 30, 24, 0) ? 'active' : ''}">
-                            <div class="time-range"><i class="fas fa-bed"></i> 9:30 PM onwards</div>
+                            <div class="time-range">
+                                <i class="fas fa-bed"></i>
+                                <span>9:30+</span>
+                            </div>
                             <div class="time-description">
-                                <h4>Rest & Relaxation</h4>
+                                <h4>Rest Time</h4>
                                 <p>Wind down and prepare for sleep</p>
                             </div>
                         </div>
                     `;
                 }
                 
-                dayViewContent.appendChild(timeTable);
-                
-                // Add study tips
-                const studyTips = document.createElement('div');
-                studyTips.className = 'study-tips';
-                studyTips.innerHTML = `
-                    <h4><i class="fas fa-lightbulb"></i> Study Tips for ${currentDay.subject}</h4>
-                    <p>${getStudyTips(currentDay.subject)}</p>
-                `;
-                dayViewContent.appendChild(studyTips);
+                scheduleSection.appendChild(timeTable);
+                dayViewContent.appendChild(scheduleSection);
                 
                 // Add completion toggle button
                 const toggleButton = document.createElement('button');
-                toggleButton.className = 'completion-toggle';
+                toggleButton.className = `completion-toggle ${currentDay.completed ? 'completed' : ''}`;
                 toggleButton.innerHTML = currentDay.completed ? 
-                    '<i class="fas fa-undo"></i> Mark as Incomplete' : 
-                    '<i class="fas fa-check"></i> Mark as Completed';
+                    '<i class="fas fa-undo"></i> Mark Incomplete' : 
+                    '<i class="fas fa-check"></i> Mark Completed';
                 toggleButton.onclick = () => toggleDayCompletion();
                 dayViewContent.appendChild(toggleButton);
+                
+                // Add study tips
+                const tipsCard = document.createElement('div');
+                tipsCard.className = 'tips-card';
+                tipsCard.innerHTML = `
+                    <h4><i class="fas fa-lightbulb"></i> Study Tips</h4>
+                    <p>${getStudyTips(currentDay.subject)}</p>
+                `;
+                dayViewContent.appendChild(tipsCard);
                 
                 // Add navigation buttons
                 const dayNav = document.createElement('div');
                 dayNav.className = 'day-nav';
                 
-                if (currentDayIndex > 0) {
-                    const prevButton = document.createElement('button');
-                    prevButton.className = 'day-nav-btn';
-                    prevButton.innerHTML = '<i class="fas fa-chevron-left"></i> Previous Day';
-                    prevButton.onclick = () => navigateToDay(currentDayIndex - 1);
-                    dayNav.appendChild(prevButton);
-                } else {
-                    dayNav.appendChild(document.createElement('div')); // Empty div for spacing
-                }
+                const prevButton = document.createElement('button');
+                prevButton.className = 'day-nav-btn';
+                prevButton.innerHTML = '<i class="fas fa-chevron-left"></i> Previous';
+                prevButton.onclick = () => navigateToDay(currentDayIndex - 1);
+                prevButton.disabled = currentDayIndex <= 0;
+                dayNav.appendChild(prevButton);
                 
-                if (currentDayIndex < studyPlan.length - 1) {
-                    const nextButton = document.createElement('button');
-                    nextButton.className = 'day-nav-btn';
-                    nextButton.innerHTML = 'Next Day <i class="fas fa-chevron-right"></i>';
-                    nextButton.onclick = () => navigateToDay(currentDayIndex + 1);
-                    dayNav.appendChild(nextButton);
-                } else {
-                    dayNav.appendChild(document.createElement('div')); // Empty div for spacing
-                }
+                const nextButton = document.createElement('button');
+                nextButton.className = 'day-nav-btn';
+                nextButton.innerHTML = 'Next <i class="fas fa-chevron-right"></i>';
+                nextButton.onclick = () => navigateToDay(currentDayIndex + 1);
+                nextButton.disabled = currentDayIndex >= studyPlan.length - 1;
+                dayNav.appendChild(nextButton);
                 
                 dayViewContent.appendChild(dayNav);
             } else {
                 // No study planned for this day
-                dayViewContent.innerHTML = `
-                    <div style="text-align: center; padding: 2rem;">
-                        <i class="fas fa-heartbeat" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
-                        <h3>No Study Planned</h3>
-                        <p>This is a rest day or revision day with no specific unit scheduled.</p>
-                        <div class="day-nav" style="justify-content: center; margin-top: 1.5rem;">
-                            ${currentDayIndex > 0 ? `<button class="day-nav-btn" onclick="navigateToDay(${currentDayIndex - 1})"><i class="fas fa-chevron-left"></i> Previous Day</button>` : ''}
-                            ${currentDayIndex < studyPlan.length - 1 ? `<button class="day-nav-btn" onclick="navigateToDay(${currentDayIndex + 1})">Next Day <i class="fas fa-chevron-right"></i></button>` : ''}
-                        </div>
+                const emptyState = document.createElement('div');
+                emptyState.className = 'empty-state';
+                emptyState.innerHTML = `
+                    <i class="fas fa-coffee"></i>
+                    <h3>No Study Planned</h3>
+                    <p>This is a rest day or revision day with no specific unit scheduled.</p>
+                    <div class="day-nav">
+                        <button class="day-nav-btn" onclick="navigateToDay(${currentDayIndex - 1})" ${currentDayIndex <= 0 ? 'disabled' : ''}>
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        <button class="day-nav-btn" onclick="navigateToDay(${currentDayIndex + 1})" ${currentDayIndex >= studyPlan.length - 1 ? 'disabled' : ''}>
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
                 `;
+                dayViewContent.appendChild(emptyState);
             }
+            
+            // Scroll to top when content changes
+            dayViewContent.scrollTop = 0;
+        }
+
+        function getSubjectIcon(subject) {
+            const icons = {
+                'Anatomy': 'fas fa-lungs',
+                'Physiology': 'fas fa-brain',
+                'Biochemistry': 'fas fa-vial',
+                'Pharmacology': 'fas fa-pills',
+                'Pathology': 'fas fa-microscope',
+                'Microbiology': 'fas fa-bacteria',
+                'Medicine': 'fas fa-stethoscope'
+            };
+            
+            return icons[subject] || 'fas fa-book-medical';
         }
 
         function navigateToDay(index) {
@@ -581,7 +738,7 @@
         }
 
         function toggleDayCompletion() {
-            if (!currentDay.subject || currentDay.subject === "No study planned") return; // Don't allow marking empty days
+            if (!currentDay.subject || currentDay.subject === "No study planned") return;
             
             currentDay.completed = !currentDay.completed;
             
@@ -594,23 +751,12 @@
         
         // Helper function to adjust color brightness
         function adjustColor(color, percent) {
-            // If color is in named format, convert to hex
-            if (color.startsWith('var(')) {
+            if (color.startsWith('var(') || color.startsWith('#')) {
                 // For simplicity, just return a default color
                 return '#5C9EAD';
             }
             
-            const num = parseInt(color.replace('#', ''), 16);
-            const R = (num >> 16) + percent;
-            const G = ((num >> 8) & 0x00FF) + percent;
-            const B = (num & 0x0000FF) + percent;
-            
-            return '#' + (
-                0x1000000 +
-                (R < 255 ? (R < 0 ? 0 : R) : 255) * 0x10000 +
-                (G < 255 ? (G < 0 ? 0 : G) : 255) * 0x100 +
-                (B < 255 ? (B < 0 ? 0 : B) : 255)
-            ).toString(16).slice(1);
+            return '#5C9EAD'; // Default fallback
         }
 
         // Initialize the day view when the page loads
